@@ -4,16 +4,18 @@ import axios from 'axios';
 export default function Logs({ token }) {
   const [logs, setLogs] = useState([]);
 
-  // FIX: rename 'fetch' -> 'loadLogs'
+  // Backend URL (Render)
+  const API = process.env.REACT_APP_API_URL || "";
+
   async function loadLogs() {
-    const r = await axios.get('/api/logs', { 
+    const r = await axios.get(`${API}/api/logs`, {
       headers: { Authorization: 'Bearer ' + token }
     });
     setLogs(r.data || []);
   }
 
   useEffect(() => {
-    loadLogs();  // FIXED
+    loadLogs();
   }, []);
 
   return (
@@ -40,3 +42,4 @@ export default function Logs({ token }) {
     </div>
   );
 }
+
